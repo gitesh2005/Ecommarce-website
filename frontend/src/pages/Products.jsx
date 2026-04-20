@@ -57,6 +57,11 @@ const Products = () => {
                     className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
                   />
                   <div className="absolute inset-0 bg-premium-dark/0 group-hover:bg-premium-dark/10 transition-colors duration-500"></div>
+                  {product.stock <= 0 && (
+                    <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm text-premium-dark text-xs uppercase tracking-widest px-3 py-1 shadow-lg">
+                      Out of Stock
+                    </div>
+                  )}
                 </div>
                 <div>
                   <p className="text-xs text-premium-brown uppercase tracking-widest mb-1">{product.category}</p>

@@ -1,5 +1,6 @@
 const Order = require('../models/Order');
 const User = require('../models/User');
+const Product = require('../models/Product');
 const Razorpay = require('razorpay');
 const crypto = require('crypto');
 const sendEmail = require('../utils/sendEmail');
@@ -49,6 +50,15 @@ const createOrder = async (req, res) => {
       console.error('Email could not be sent', emailErr);
     }
 
+    // Decrease Stock for COD
+    for (const item of items) {
+      const product = await Product.findById(item.product);
+      if (product) {
+        product.stock = Math.max(0, product.stock - item.quantity);
+        await product.save();
+      }
+    }
+
     res.status(201).json({ order: createdOrder });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -82,6 +92,15 @@ const verifyRazorpayPayment = async (req, res) => {
           });
         } catch (emailErr) {
           console.error('Email could not be sent', emailErr);
+        }
+
+        // Decrease Stock for Razorpay
+        for (const item of order.items) {
+          const product = await Product.findById(item.product);
+          if (product) {
+            product.stock = Math.max(0, product.stock - item.quantity);
+            await product.save();
+          }
         }
 
         return res.status(200).json({ message: "Payment verified successfully" });
