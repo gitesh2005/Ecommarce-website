@@ -51,10 +51,10 @@ const Checkout = () => {
         paymentMethod
       };
 
-      const { data } = await axios.post('http://localhost:5000/api/orders', orderData, config);
+      const { data } = await axios.post('https://hari-collection-backend.onrender.com/api/orders', orderData, config);
 
       if (paymentMethod === 'Razorpay') {
-        const { data: clientId } = await axios.get('http://localhost:5000/api/config/razorpay');
+        const { data: clientId } = await axios.get('https://hari-collection-backend.onrender.com/api/config/razorpay');
 
         const res = await loadRazorpay();
         if (!res) {
@@ -72,7 +72,7 @@ const Checkout = () => {
           order_id: data.rzOrder.id,
           handler: async function (response) {
             try {
-              await axios.post('http://localhost:5000/api/orders/verify-payment', {
+              await axios.post('https://hari-collection-backend.onrender.com/api/orders/verify-payment', {
                 razorpay_order_id: response.razorpay_order_id,
                 razorpay_payment_id: response.razorpay_payment_id,
                 razorpay_signature: response.razorpay_signature,

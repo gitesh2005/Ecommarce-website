@@ -16,7 +16,7 @@ const AdminDashboard = () => {
 
   const fetchProducts = async () => {
     try {
-      const { data } = await axios.get('http://localhost:5000/api/products');
+      const { data } = await axios.get('https://hari-collection-backend.onrender.com/api/products');
       setProducts(data);
     } catch (err) {
       console.error(err);
@@ -26,7 +26,7 @@ const AdminDashboard = () => {
   const fetchOrders = async () => {
     try {
       const config = { headers: { Authorization: `Bearer ${user.token}` } };
-      const { data } = await axios.get('http://localhost:5000/api/orders', config);
+      const { data } = await axios.get('https://hari-collection-backend.onrender.com/api/orders', config);
       setOrders(data);
     } catch (err) {
       console.error(err);
@@ -51,7 +51,7 @@ const AdminDashboard = () => {
           Authorization: `Bearer ${user.token}`,
         },
       };
-      const { data } = await axios.post('http://localhost:5000/api/upload', formData, config);
+      const { data } = await axios.post('https://hari-collection-backend.onrender.com/api/upload', formData, config);
       setNewProduct({ ...newProduct, image: data.url });
       setUploadingImage(false);
     } catch (error) {
@@ -65,7 +65,7 @@ const AdminDashboard = () => {
     e.preventDefault();
     try {
       const config = { headers: { Authorization: `Bearer ${user.token}` } };
-      await axios.post('http://localhost:5000/api/products', newProduct, config);
+      await axios.post('https://hari-collection-backend.onrender.com/api/products', newProduct, config);
       setNewProduct({ title: '', description: '', price: '', category: '', image: '', stock: '' });
       fetchProducts();
       alert('Product added!');
@@ -79,7 +79,7 @@ const AdminDashboard = () => {
     if (window.confirm('Delete this product?')) {
       try {
         const config = { headers: { Authorization: `Bearer ${user.token}` } };
-        await axios.delete(`http://localhost:5000/api/products/${id}`, config);
+        await axios.delete(`https://hari-collection-backend.onrender.com/api/products/${id}`, config);
         fetchProducts();
       } catch (err) {
         console.error(err);

@@ -20,7 +20,7 @@ const ProductDetails = () => {
         const config = {
           headers: { Authorization: `Bearer ${user.token}` }
         };
-        const { data } = await axios.get(`http://localhost:5000/api/products/${id}`, config);
+        const { data } = await axios.get(`https://hari-collection-backend.onrender.com/api/products/${id}`, config);
         setProduct(data);
       } catch (error) {
         console.error(error);
